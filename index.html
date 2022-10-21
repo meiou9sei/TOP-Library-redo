@@ -10,6 +10,32 @@
     <title>TOP library</title>
 </head>
 <body>
-    this is a basic library app
+    <main>
+        <h1>simple library app</h1>
+        <form id="addBookForm">
+            <h2>add your books here</h2>
+            <div class="formEntry">
+                <label for="bookTitle">Title: </label>
+                <input type="text" name="bookTitle" id="bookTitle">
+            </div>
+            <div class="formEntry">
+                <label for="bookAuthor">Author: </label>
+                <input type="text" name="bookAuthor" id="bookAuthor">
+            </div>
+            <div class="formEntry">
+                <label for="bookPages">Pages: </label>
+                <input type="number" name="bookPages" id="bookPages">
+            </div>
+            <div class="formEntry">
+                <p>Did you finish the book?</p>
+                <input type="radio" name="isBookRead" id="bookIsRead" value="readTrue" checked>
+                <label for="bookIsRead">Yes</label>
+                <input type="radio" name="isBookRead" id="bookIsNotRead" value="readFalse">
+                <label for="bookIsNotRead">No</label>
+            </div>
+            <button class="submitButton">Submit</button>
+        </form>
+        <form action=""></form>
+    </main>
 </body>
 </html>
