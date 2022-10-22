@@ -57,8 +57,6 @@ function createBookCard(newBook) {
   const pages = document.createElement("p");
   const readStatus = document.createElement("p");
 
-  bookCard.classList.add("bookCard");
-
   title.textContent = newBook.title;
   author.textContent = newBook.author;
   pages.textContent = newBook.pages;
@@ -90,8 +88,15 @@ function createBookCard(newBook) {
   toggleRead.addEventListener("click", function (e) {
     newBook.read = !newBook.read;
     readStatus.textContent = `Book read: ${newBook.read}`;
+    if (newBook.read)
+      bookCard.classList.replace("bookCardNotRead", "bookCardRead");
+    else bookCard.classList.replace("bookCardRead", "bookCardNotRead");
   });
   bookCard.appendChild(toggleRead);
+
+  // sets bookCard bg color class
+  if (newBook.read) bookCard.classList.add("bookCardRead");
+  else bookCard.classList.add("bookCardNotRead");
 
   return bookCard;
 }
