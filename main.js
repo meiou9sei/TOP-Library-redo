@@ -33,7 +33,6 @@ function submitNewBook(e) {
   ).value;
 
   let newBook = new Book(title.value, author.value, pages.value, isBookRead);
-  console.log(newBook);
   addBookToLibrary(newBook);
 
   title.value = "";
@@ -52,7 +51,6 @@ function addBookToDisplay(newBook) {
 }
 
 function createBookCard(newBook) {
-  // console.log(newBook);
   const bookCard = document.createElement("div");
   const title = document.createElement("p");
   const author = document.createElement("p");
@@ -71,6 +69,7 @@ function createBookCard(newBook) {
   bookCard.appendChild(pages);
   bookCard.appendChild(readStatus);
 
+  // remove book button
   const discardBook = document.createElement("button");
   discardBook.textContent = "remove book";
   bookCard.dataset.bookindex = newBook.bookIndex;
@@ -85,7 +84,6 @@ function createBookCard(newBook) {
   });
   bookCard.appendChild(discardBook);
 
-  // console.log(bookCard);
   return bookCard;
 }
 
