@@ -62,7 +62,7 @@ function createBookCard(newBook) {
   title.textContent = newBook.title;
   author.textContent = newBook.author;
   pages.textContent = newBook.pages;
-  readStatus.textContent = newBook.read;
+  readStatus.textContent = `Book read: ${newBook.read}`;
 
   bookCard.appendChild(title);
   bookCard.appendChild(author);
@@ -83,6 +83,15 @@ function createBookCard(newBook) {
     e.target.parentNode.remove();
   });
   bookCard.appendChild(discardBook);
+
+  // toggle read button
+  const toggleRead = document.createElement("button");
+  toggleRead.textContent = "toggle read";
+  toggleRead.addEventListener("click", function (e) {
+    newBook.read = !newBook.read;
+    readStatus.textContent = `Book read: ${newBook.read}`;
+  });
+  bookCard.appendChild(toggleRead);
 
   return bookCard;
 }
