@@ -1,4 +1,5 @@
 let myLibrary = [];
+let bookIndex = 0;
 
 // declarations
 const booksDisplay = document.getElementById("booksDisplay");
@@ -11,12 +12,15 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.info = function () {
-    return `${title} by ${author}, ${pages} pages, ${
-      read ? "read" : "not read yet" + "."
-    }`;
-  };
+  this.bookIndex = bookIndex;
+  bookIndex++;
 }
+
+Book.prototype.info = function () {
+  return `${title} by ${author}, ${pages} pages, ${
+    read ? "read" : "not read yet" + "."
+  }`;
+};
 
 function submitNewBook(e) {
   e.preventDefault();
@@ -48,7 +52,7 @@ function addBookToDisplay(newBook) {
 }
 
 function createBookCard(newBook) {
-  console.log(newBook);
+  // console.log(newBook);
   const bookCard = document.createElement("div");
   const title = document.createElement("p");
   const author = document.createElement("p");
@@ -67,7 +71,21 @@ function createBookCard(newBook) {
   bookCard.appendChild(pages);
   bookCard.appendChild(readStatus);
 
-  console.log(bookCard);
+  const discardBook = document.createElement("button");
+  discardBook.textContent = "remove book";
+  bookCard.dataset.bookindex = newBook.bookIndex;
+  discardBook.addEventListener("click", function (e) {
+    // removes book from myLibrary
+    const removeIndex = myLibrary.findIndex(
+      (book) => book.bookIndex === newBook.bookIndex
+    );
+    myLibrary.splice(removeIndex, 1);
+    // removes book from display
+    e.target.parentNode.remove();
+  });
+  bookCard.appendChild(discardBook);
+
+  // console.log(bookCard);
   return bookCard;
 }
 
@@ -80,6 +98,3 @@ addBookToLibrary(exampleBook1);
 addBookToLibrary(exampleBook2);
 addBookToLibrary(exampleBook3);
 addBookToLibrary(exampleBook4);
-
-// display books
-addBookToDisplay();
