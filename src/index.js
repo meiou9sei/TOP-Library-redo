@@ -33,6 +33,7 @@ getDocs(colRef)
     });
     console.log("firebaseBooks successfully retrieved");
     console.log(myFireLibrary);
+    // initiate app
     runApp(myFireLibrary);
   })
   .catch((err) => {
@@ -52,7 +53,7 @@ function displayWarning(text) {
   errorDescription.textContent = text;
   errorDisplay.appendChild(errorDescription);
 
-  const appTitle = document.getElementById("app-title");
-  appTitle.appendChild(errorDisplay);
-  setTimeout(appTitle.removeChild(displayWarning), 5000);
+  const library = document.querySelector(".library");
+  library.appendChild(errorDisplay);
+  setTimeout(library.removeChild(displayWarning), 5000);
 }
