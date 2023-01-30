@@ -1,7 +1,7 @@
 import runApp from "./main";
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 import "./normalize.css";
 import "./styles.css";
@@ -24,22 +24,17 @@ const db = getFirestore();
 // collection ref
 const colRef = collection(db, "library");
 
-// get collection data
-getDocs(colRef)
-  .then((snapshot) => {
-    let myFireLibrary = [];
-    snapshot.docs.forEach((doc) => {
-      myFireLibrary.push({ ...doc.data(), id: doc.id });
-    });
-    console.log("firebaseBooks successfully retrieved");
-    console.log(myFireLibrary);
-    // initiate app
-    runApp(myFireLibrary, db, colRef);
-  })
-  .catch((err) => {
-    displayWarning("error retrieving books from database");
-    console.log(err.message);
+// real time collection data
+onSnapshot(colRef, (snapshot) => {
+  let myFireLibrary = [];
+  snapshot.docs.forEach((doc) => {
+    myFireLibrary.push({ ...doc.data(), id: doc.id });
   });
+  console.log("firebaseBooks successfully retrieved");
+  console.log(myFireLibrary);
+  // run app
+  runApp(myFireLibrary, db, colRef);
+});
 
 function displayWarning(text) {
   console.log(text);
