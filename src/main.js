@@ -1,6 +1,5 @@
 export default function runApp(externalBooks) {
   let myLibrary = [];
-  let bookIndex = 0;
 
   // declarations
   const booksDisplay = document.getElementById("booksDisplay");
@@ -8,13 +7,12 @@ export default function runApp(externalBooks) {
   form.addEventListener("submit", submitNewBook);
 
   // constructor
-  function Book(title, author, pages, read) {
+  function Book(id, title, author, pages, read) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.bookIndex = bookIndex;
-    bookIndex++;
   }
 
   Book.prototype.info = function () {
@@ -71,12 +69,10 @@ export default function runApp(externalBooks) {
     // remove book button
     const discardBook = document.createElement("button");
     discardBook.textContent = "remove book";
-    bookCard.dataset.bookindex = newBook.bookIndex;
+    bookCard.dataset.id = newBook.id;
     discardBook.addEventListener("click", function (e) {
       // removes book from myLibrary
-      const removeIndex = myLibrary.findIndex(
-        (book) => book.bookIndex === newBook.bookIndex
-      );
+      const removeIndex = myLibrary.findIndex((book) => book.id === newBook.id);
       myLibrary.splice(removeIndex, 1);
       // removes book from display
       e.target.parentNode.remove();
@@ -105,6 +101,7 @@ export default function runApp(externalBooks) {
   // firebase books
   externalBooks.forEach((book) => {
     let externalBook = new Book(
+      book.id,
       book.title,
       book.author,
       book.pages,
