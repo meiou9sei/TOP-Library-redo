@@ -34,7 +34,7 @@ getDocs(colRef)
     console.log("firebaseBooks successfully retrieved");
     console.log(myFireLibrary);
     // initiate app
-    runApp(myFireLibrary, colRef);
+    runApp(myFireLibrary, db, colRef);
   })
   .catch((err) => {
     displayWarning("error retrieving books from database");

@@ -1,6 +1,6 @@
-import { addDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc } from "firebase/firestore";
 
-export default function runApp(externalBooks, colRef) {
+export default function runApp(externalBooks, db, colRef) {
   let myLibrary = [];
 
   // declarations
@@ -69,11 +69,9 @@ export default function runApp(externalBooks, colRef) {
     discardBook.textContent = "remove book";
     bookCard.dataset.id = newBook.id;
     discardBook.addEventListener("click", function (e) {
-      // removes book from myLibrary
-      const removeIndex = myLibrary.findIndex((book) => book.id === newBook.id);
-      myLibrary.splice(removeIndex, 1);
-      // removes book from display
-      e.target.parentNode.remove();
+      console.log(bookCard.dataset.id);
+      const docRef = doc(db, "library", bookCard.dataset.id);
+      deleteDoc(docRef);
     });
     bookCard.appendChild(discardBook);
 
