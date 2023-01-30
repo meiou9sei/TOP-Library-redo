@@ -35,5 +35,24 @@ getDocs(colRef)
     console.log(myFireLibrary);
     runApp(myFireLibrary);
   })
-  // TODO: display error warning to user as a modal or smth
-  .catch((err) => console.log(err.message));
+  .catch((err) => {
+    displayWarning("error retrieving books from database");
+    console.log(err.message);
+  });
+
+function displayWarning(text) {
+  console.log(text);
+
+  const errorDisplay = document.createElement("div");
+  errorDisplay.classList.add("warning");
+  const errorTitle = document.createElement("h2");
+  errorTitle.textContent = "Error!";
+  errorDisplay.appendChild(errorTitle);
+  const errorDescription = document.createElement("p");
+  errorDescription.textContent = text;
+  errorDisplay.appendChild(errorDescription);
+
+  const appTitle = document.getElementById("app-title");
+  appTitle.appendChild(errorDisplay);
+  setTimeout(appTitle.removeChild(displayWarning), 5000);
+}
