@@ -1,18 +1,20 @@
-export default function runApp(externalBooks) {
+import { addDoc } from "firebase/firestore";
+
+export default function runApp(externalBooks, colRef) {
   let myLibrary = [];
 
   // declarations
   const booksDisplay = document.getElementById("booksDisplay");
-  const form = document.getElementById("addBookForm");
-  form.addEventListener("submit", submitNewBook);
+  const addBookForm = document.getElementById("addBookForm");
+  addBookForm.addEventListener("submit", submitNewBook);
 
   // constructor
-  function Book(id, title, author, pages, read) {
-    this.id = id;
+  function Book(title, author, pages, read, id = null) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.id = id;
   }
 
   Book.prototype.info = function () {
@@ -24,19 +26,15 @@ export default function runApp(externalBooks) {
   function submitNewBook(e) {
     e.preventDefault();
 
-    const title = document.getElementById("bookTitle");
-    const author = document.getElementById("bookAuthor");
-    const pages = document.getElementById("bookPages");
-    const isBookRead = document.querySelector(
-      "input[name=isBookRead]:checked"
-    ).value;
-
-    let newBook = new Book(title.value, author.value, pages.value, isBookRead);
-    addBookToLibrary(newBook);
-
-    title.value = "";
-    author.value = "";
-    pages.value = "";
+    addDoc(colRef, {
+      title: addBookForm.bookTitle.value,
+      author: addBookForm.bookAuthor.value,
+      pages: addBookForm.bookPages.value,
+      readStatus: addBookForm.isBookRead.value,
+    }).then(() => {
+      console.log("adding book successful");
+      addBookForm.reset();
+    });
   }
 
   function addBookToLibrary(newBook) {
@@ -101,11 +99,11 @@ export default function runApp(externalBooks) {
   // firebase books
   externalBooks.forEach((book) => {
     let externalBook = new Book(
-      book.id,
       book.title,
       book.author,
       book.pages,
-      book.readStatus
+      book.readStatus,
+      book.id
     );
     addBookToLibrary(externalBook);
   });
