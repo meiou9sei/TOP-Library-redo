@@ -102,15 +102,14 @@ export default function runApp(externalBooks) {
     return bookCard;
   }
 
-  // example books - remove these later?
-  let exampleBook1 = new Book("my awesome life", "cameron", "2000", true);
-  let exampleBook2 = new Book("my life sucks now", "jeffrey", "10", false);
-  let exampleBook3 = new Book("actually its cool", "tim", "20", false);
-  let exampleBook4 = new Book("my awesome life 4", "cameron", "30", true);
-  addBookToLibrary(exampleBook1);
-  addBookToLibrary(exampleBook2);
-  addBookToLibrary(exampleBook3);
-  addBookToLibrary(exampleBook4);
-
   // firebase books
+  externalBooks.forEach((book) => {
+    let externalBook = new Book(
+      book.title,
+      book.author,
+      book.pages,
+      book.readStatus
+    );
+    addBookToLibrary(externalBook);
+  });
 }
