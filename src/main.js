@@ -94,7 +94,13 @@ export default function runApp(externalBooks, db, colRef) {
     return bookCard;
   }
 
-  // firebase books
+  // clear display when running app
+  function clearDisplay() {
+    booksDisplay.innerHTML = "";
+  }
+  clearDisplay();
+
+  // display firebase books
   externalBooks.forEach((book) => {
     let externalBook = new Book(
       book.title,
