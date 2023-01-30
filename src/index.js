@@ -6,8 +6,6 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import "./normalize.css";
 import "./styles.css";
 
-runApp();
-
 const firebaseConfig = {
   apiKey: "AIzaSyB9XL6YZAFlGJL9XKMqgvlLgJNOMlx3YHc",
   authDomain: "top-library-redo.firebaseapp.com",
@@ -33,6 +31,9 @@ getDocs(colRef)
     snapshot.docs.forEach((doc) => {
       myFireLibrary.push({ ...doc.data(), id: doc.id });
     });
+    console.log("firebaseBooks successfully retrieved");
     console.log(myFireLibrary);
+    runApp(myFireLibrary);
   })
+  // TODO: display error warning to user as a modal or smth
   .catch((err) => console.log(err.message));

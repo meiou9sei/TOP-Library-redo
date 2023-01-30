@@ -1,4 +1,4 @@
-export default function runApp() {
+export default function runApp(externalBooks) {
   let myLibrary = [];
   let bookIndex = 0;
 
@@ -111,4 +111,6 @@ export default function runApp() {
   addBookToLibrary(exampleBook2);
   addBookToLibrary(exampleBook3);
   addBookToLibrary(exampleBook4);
+
+  // firebase books
 }
