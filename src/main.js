@@ -1,4 +1,4 @@
-import { addDoc, deleteDoc, doc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 export default function runApp(externalBooks, db, colRef) {
   let myLibrary = [];
@@ -68,7 +68,7 @@ export default function runApp(externalBooks, db, colRef) {
     const discardBook = document.createElement("button");
     discardBook.textContent = "remove book";
     bookCard.dataset.id = newBook.id;
-    discardBook.addEventListener("click", function (e) {
+    discardBook.addEventListener("click", function () {
       console.log(bookCard.dataset.id);
       const docRef = doc(db, "library", bookCard.dataset.id);
       deleteDoc(docRef);
@@ -78,12 +78,17 @@ export default function runApp(externalBooks, db, colRef) {
     // toggle read button
     const toggleRead = document.createElement("button");
     toggleRead.textContent = "toggle read";
-    toggleRead.addEventListener("click", function (e) {
-      newBook.read = !newBook.read;
-      readStatus.textContent = `Book read: ${newBook.read}`;
-      if (newBook.read)
-        bookCard.classList.replace("bookCardNotRead", "bookCardRead");
-      else bookCard.classList.replace("bookCardRead", "bookCardNotRead");
+    toggleRead.addEventListener("click", function () {
+      // new way
+      const bookToUpdate = doc(db, "library", bookCard.dataset.id);
+      updateDoc(bookToUpdate, { readStatus: !readStatus });
+
+      // // old way
+      // newBook.read = !newBook.read;
+      // readStatus.textContent = `Book read: ${newBook.read}`;
+      // if (newBook.read)
+      //   bookCard.classList.replace("bookCardNotRead", "bookCardRead");
+      // else bookCard.classList.replace("bookCardRead", "bookCardNotRead");
     });
     bookCard.appendChild(toggleRead);
 
