@@ -1,6 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
-import { addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getFirestore,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 
 import "./normalize.css";
 import "./styles.css";
@@ -66,9 +73,8 @@ function displayWarning(text) {
 
 // webapp logic
 
-let myLibrary = [];
-
 // declarations
+let myLibrary = [];
 const booksDisplay = document.getElementById("booksDisplay");
 const addBookForm = document.getElementById("addBookForm");
 addBookForm.addEventListener("submit", submitNewBook);
