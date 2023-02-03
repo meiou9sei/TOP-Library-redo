@@ -82,13 +82,6 @@ export default function runApp(externalBooks, db, colRef) {
       // new way
       const bookToUpdate = doc(db, "library", bookCard.dataset.id);
       updateDoc(bookToUpdate, { readStatus: !readStatus });
-
-      // // old way
-      // newBook.read = !newBook.read;
-      // readStatus.textContent = `Book read: ${newBook.read}`;
-      // if (newBook.read)
-      //   bookCard.classList.replace("bookCardNotRead", "bookCardRead");
-      // else bookCard.classList.replace("bookCardRead", "bookCardNotRead");
     });
     bookCard.appendChild(toggleRead);
 
