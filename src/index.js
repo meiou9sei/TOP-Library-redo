@@ -1,14 +1,12 @@
-import { initFirebaseApp } from "./firebase";
 import runLibraryApp from "./library";
 
 import "./normalize.css";
 import "./styles.css";
 
-// init firebase app
-initFirebaseApp();
-
-// run app
-runLibraryApp();
+// check if user logged in to run library
+if (true) {
+  runLibraryApp();
+}
 
 function displayWarning(text) {
   const errorDisplay = document.createElement("div");

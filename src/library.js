@@ -1,3 +1,4 @@
+import { app } from "./firebase";
 import {
   addDoc,
   collection,
@@ -9,8 +10,12 @@ import {
 } from "firebase/firestore";
 
 export default function runLibraryApp() {
+  // display library
+  const template = document.getElementById("libraryTemplate");
+  document.querySelector("main").appendChild(template.content);
+
   // init services
-  const db = getFirestore();
+  const db = getFirestore(app);
 
   // collection ref
   const colRef = collection(db, "library");
