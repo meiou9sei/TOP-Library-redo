@@ -34,35 +34,40 @@
                 <p>Don't have an account? <button type="button" class="action-link">Register</button></p>
             </form>
         </template>
+        <template id="logout-template">
+            <button class="logout">Logout</button>
+        </template>
         <template id="library-template">
-            <form id="addBookForm">
-                <h2>add your books here</h2>
-                <div class="formEntry">
-                    <label for="bookTitle">Title: </label>
-                    <input type="text" name="bookTitle" id="bookTitle" required>
-                </div>
-                <div class="formEntry">
-                    <label for="bookAuthor">Author: </label>
-                    <input type="text" name="bookAuthor" id="bookAuthor" required>
-                </div>
-                <div class="formEntry">
-                    <label for="bookPages">Pages: </label>
-                    <input type="number" name="bookPages" id="bookPages" required>
-                </div>
-                <div class="formEntry">
-                    <p>Did you finish the book?</p>
-                    <input type="radio" name="isBookRead" id="bookIsRead" value="true" checked>
-                    <label for="bookIsRead">Yes</label>
-                    <input type="radio" name="isBookRead" id="bookIsNotRead" value="false">
-                    <label for="bookIsNotRead">No</label>
-                </div>
-                <button class="submitButton">add book to library</button>
-            </form>
-            <section class="library">
-                <h2 id="yourLibraryTitle">your library</h2>
-                <div id="booksDisplay">
-                </div>
-            </section>
+            <div class="library-wrapper">
+                <form id="addBookForm">
+                    <h2>add your books here</h2>
+                    <div class="formEntry">
+                        <label for="bookTitle">Title: </label>
+                        <input type="text" name="bookTitle" id="bookTitle" required>
+                    </div>
+                    <div class="formEntry">
+                        <label for="bookAuthor">Author: </label>
+                        <input type="text" name="bookAuthor" id="bookAuthor" required>
+                    </div>
+                    <div class="formEntry">
+                        <label for="bookPages">Pages: </label>
+                        <input type="number" name="bookPages" id="bookPages" required>
+                    </div>
+                    <div class="formEntry">
+                        <p>Did you finish the book?</p>
+                        <input type="radio" name="isBookRead" id="bookIsRead" value="true" checked>
+                        <label for="bookIsRead">Yes</label>
+                        <input type="radio" name="isBookRead" id="bookIsNotRead" value="false">
+                        <label for="bookIsNotRead">No</label>
+                    </div>
+                    <button class="submitButton">add book to library</button>
+                </form>
+                <section class="library">
+                    <h2 id="yourLibraryTitle">your library</h2>
+                    <div id="booksDisplay">
+                    </div>
+                </section>
+            </div>
         </template>
     </main>
     <footer>

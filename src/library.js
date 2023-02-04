@@ -8,11 +8,25 @@ import {
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
+import { auth } from "./userAuth";
+import { signOut } from "firebase/auth";
+
+const main = document.querySelector("main");
 
 export default function runLibraryApp() {
+  // set up logout
+  const logoutTemplate = document.querySelector("#logout-template");
+  main.appendChild(logoutTemplate.content);
+  const logoutButton = document.querySelector(".logout");
+  logoutButton.addEventListener("click", () => {
+    signOut(auth);
+    main.removeChild(document.querySelector(".library-wrapper"));
+    main.removeChild(document.querySelector(".logout"));
+  });
+
   // display library
-  const template = document.getElementById("library-template");
-  document.querySelector("main").appendChild(template.content);
+  const library = document.getElementById("library-template").content;
+  main.appendChild(library);
 
   // init services
   const db = getFirestore(app);

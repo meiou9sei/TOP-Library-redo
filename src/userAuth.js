@@ -1,6 +1,8 @@
 import { app } from "./firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
+const main = document.querySelector("main");
+
 export function signupNewUser() {
   const signupForm = document.querySelector("#signup");
   signupForm.addEventListener("submit", (e) => {
@@ -12,9 +14,8 @@ export function signupNewUser() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        signupForm.reset();
         console.log(user);
-        // ...
+        main.removeChild(signupForm);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -24,4 +25,4 @@ export function signupNewUser() {
   });
 }
 
-const auth = getAuth(app);
+export const auth = getAuth(app);

@@ -3,16 +3,27 @@ import { signupNewUser } from "./userAuth";
 
 import "./normalize.css";
 import "./styles.css";
+import { auth } from "./userAuth";
+import { onAuthStateChanged } from "firebase/auth";
+
+const main = document.querySelector("main");
 
 // check if user logged in to run library
-if (false) {
-  runLibraryApp();
-} else {
-  // display login/signup
-  const template = document.getElementById("signup-template");
-  document.querySelector("main").appendChild(template.content);
-  signupNewUser();
-}
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const currentUserDisplay = document.createElement("div");
+    currentUserDisplay.textContent = "Current user: " + user.uid;
+    main.appendChild(currentUserDisplay);
+
+    runLibraryApp();
+  } else {
+    console.log("running");
+    // display login/signup
+    const signupTemplate = document.getElementById("signup-template").content;
+    main.appendChild(document.importNode(signupTemplate, true));
+    signupNewUser();
+  }
+});
 
 function displayWarning(text) {
   const errorDisplay = document.createElement("div");
