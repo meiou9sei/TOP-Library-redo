@@ -12,7 +12,29 @@
 <body>
     <main>
         <h1 id="app-title">simple library app</h1>
-        <template id="libraryTemplate">
+        <template id="signup-template">
+            <form id="signup">
+                <h2>Sign up:</h2>
+                <label for="email">Email: </label>
+                <input required type="email" name="email" id="email">
+                <label for="password">Password: </label>
+                <input required type="password" name="password" id="password">
+                <button>Signup</button>
+                <p>Already have an account? <button type="button" class="action-link">Login</button></p>
+            </form>
+        </template>
+        <template id="login-template">
+            <form id="login">
+                <h2>Login:</h2>
+                <label for="email">Email: </label>
+                <input required type="email" name="email" id="email">
+                <label for="password">Password: </label>
+                <input required type="password" name="password" id="password">
+                <button>Login</button>
+                <p>Don't have an account? <button type="button" class="action-link">Register</button></p>
+            </form>
+        </template>
+        <template id="library-template">
             <form id="addBookForm">
                 <h2>add your books here</h2>
                 <div class="formEntry">

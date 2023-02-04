@@ -11,7 +11,7 @@ import {
 
 export default function runLibraryApp() {
   // display library
-  const template = document.getElementById("libraryTemplate");
+  const template = document.getElementById("library-template");
   document.querySelector("main").appendChild(template.content);
 
   // init services

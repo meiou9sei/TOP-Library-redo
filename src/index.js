@@ -1,11 +1,17 @@
 import runLibraryApp from "./library";
+import { signupNewUser } from "./userAuth";
 
 import "./normalize.css";
 import "./styles.css";
 
 // check if user logged in to run library
-if (true) {
+if (false) {
   runLibraryApp();
+} else {
+  // display login/signup
+  const template = document.getElementById("signup-template");
+  document.querySelector("main").appendChild(template.content);
+  signupNewUser();
 }
 
 function displayWarning(text) {
