@@ -1,0 +1,30 @@
+{
+  "name": "top-library-redo",
+  "version": "1.0.0",
+  "description": "Live demo available here: https://meiou9sei.github.io/TOP-Library-redo/",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meiou9sei/TOP-Library-redo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meiou9sei/TOP-Library-redo/issues"
+  },
+  "homepage": "https://github.com/meiou9sei/TOP-Library-redo#readme",
+  "dependencies": {
+    "firebase": "^9.16.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
