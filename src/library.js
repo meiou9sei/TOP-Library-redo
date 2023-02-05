@@ -16,12 +16,12 @@ const logoutButton = document.querySelector(".logout-button");
 const signUp = document.getElementById("signup");
 const currentUserDisplay = document.querySelector(".current-user-display");
 
-export function userLoggedinApp() {
+export function userLoggedinApp(user) {
   // display library
-  libraryWrapper.style.display = "block";
-  logoutButton.style.display = "block";
+  libraryWrapper.style.display = "flex";
+  logoutButton.style.display = "flex";
   currentUserDisplay.textContent = "Current user: " + user.uid;
-  currentUserDisplay.style.display = "block";
+  currentUserDisplay.style.display = "flex";
   signUp.style.display = "none";
 }
 
