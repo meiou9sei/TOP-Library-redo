@@ -11,22 +11,32 @@ import {
 import { auth } from "./userAuth";
 import { signOut } from "firebase/auth";
 
-const main = document.querySelector("main");
+const libraryWrapper = document.querySelector(".library-wrapper");
+const logoutButton = document.querySelector(".logout-button");
+const signUp = document.getElementById("signup");
+const currentUserDisplay = document.querySelector(".current-user-display");
 
-export default function runLibraryApp() {
+export function userLoggedinApp() {
+  // display library
+  libraryWrapper.style.display = "block";
+  logoutButton.style.display = "block";
+  currentUserDisplay.textContent = "Current user: " + user.uid;
+  currentUserDisplay.style.display = "block";
+  signUp.style.display = "none";
+}
+
+export function userLoggedoutApp() {
+  currentUserDisplay.style.display = "none";
+  // display login/signup
+  logoutButton.style.display = "none";
+  libraryWrapper.style.display = "none";
+}
+
+export default function setupLibraryApp() {
   // set up logout
-  const logoutTemplate = document.querySelector("#logout-template");
-  main.appendChild(logoutTemplate.content);
-  const logoutButton = document.querySelector(".logout");
   logoutButton.addEventListener("click", () => {
     signOut(auth);
-    main.removeChild(document.querySelector(".library-wrapper"));
-    main.removeChild(document.querySelector(".logout"));
   });
-
-  // display library
-  const library = document.getElementById("library-template").content;
-  main.appendChild(library);
 
   // init services
   const db = getFirestore(app);

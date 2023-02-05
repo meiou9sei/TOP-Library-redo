@@ -1,27 +1,20 @@
-import runLibraryApp from "./library";
-import { signupNewUser } from "./userAuth";
+import setupLibraryApp, { userLoggedinApp, userLoggedoutApp } from "./library";
+import { setupSignins } from "./userAuth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./userAuth";
 
 import "./normalize.css";
 import "./styles.css";
-import { auth } from "./userAuth";
-import { onAuthStateChanged } from "firebase/auth";
 
-const main = document.querySelector("main");
-
+// setup library
+setupLibraryApp();
+setupSignins();
 // check if user logged in to run library
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    const currentUserDisplay = document.createElement("div");
-    currentUserDisplay.textContent = "Current user: " + user.uid;
-    main.appendChild(currentUserDisplay);
-
-    runLibraryApp();
+    userLoggedinApp(user);
   } else {
-    console.log("running");
-    // display login/signup
-    const signupTemplate = document.getElementById("signup-template").content;
-    main.appendChild(document.importNode(signupTemplate, true));
-    signupNewUser();
+    userLoggedoutApp();
   }
 });
 
