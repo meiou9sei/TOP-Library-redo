@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getFirestore,
   onSnapshot,
   updateDoc,
@@ -30,6 +31,7 @@ export function userLoggedoutApp() {
   // display login/signup
   logoutButton.style.display = "none";
   libraryWrapper.style.display = "none";
+  signUp.style.display = "block";
 }
 
 export default function setupLibraryApp() {
@@ -135,7 +137,6 @@ export default function setupLibraryApp() {
     discardBook.textContent = "remove book";
     bookCard.dataset.id = newBook.id;
     discardBook.addEventListener("click", function () {
-      console.log(bookCard.dataset.id);
       const docRef = doc(db, "library", bookCard.dataset.id);
       deleteDoc(docRef);
     });
@@ -144,10 +145,15 @@ export default function setupLibraryApp() {
     // toggle read button
     const toggleRead = document.createElement("button");
     toggleRead.textContent = "toggle read";
-    toggleRead.addEventListener("click", function () {
-      // new way
+    toggleRead.addEventListener("click", async function () {
       const bookToUpdate = doc(db, "library", bookCard.dataset.id);
-      updateDoc(bookToUpdate, { readStatus: !readStatus });
+      const docSnap = await getDoc(bookToUpdate);
+
+      if (docSnap.exists()) {
+        updateDoc(bookToUpdate, { readStatus: !docSnap.data().readStatus });
+      } else {
+        console.log("could not update book readStatus");
+      }
     });
     bookCard.appendChild(toggleRead);
 
