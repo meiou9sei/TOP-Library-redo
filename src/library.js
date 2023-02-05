@@ -1,3 +1,4 @@
+import { app } from "./firebase";
 import {
   addDoc,
   collection,
@@ -7,10 +8,38 @@ import {
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
+import { auth } from "./userAuth";
+import { signOut } from "firebase/auth";
 
-export default function runLibraryApp() {
+const libraryWrapper = document.querySelector(".library-wrapper");
+const logoutButton = document.querySelector(".logout-button");
+const signUp = document.getElementById("signup");
+const currentUserDisplay = document.querySelector(".current-user-display");
+
+export function userLoggedinApp(user) {
+  // display library
+  libraryWrapper.style.display = "flex";
+  logoutButton.style.display = "flex";
+  currentUserDisplay.textContent = "Current user: " + user.uid;
+  currentUserDisplay.style.display = "flex";
+  signUp.style.display = "none";
+}
+
+export function userLoggedoutApp() {
+  currentUserDisplay.style.display = "none";
+  // display login/signup
+  logoutButton.style.display = "none";
+  libraryWrapper.style.display = "none";
+}
+
+export default function setupLibraryApp() {
+  // set up logout
+  logoutButton.addEventListener("click", () => {
+    signOut(auth);
+  });
+
   // init services
-  const db = getFirestore();
+  const db = getFirestore(app);
 
   // collection ref
   const colRef = collection(db, "library");
