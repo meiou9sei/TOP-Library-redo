@@ -1,4 +1,4 @@
-Live demo available here: https://meiou9sei.github.io/TOP-Library-redo/
+Live demo available here: https://meiou9sei.github.io/TOP-Library-redo/dist
 
 Learner's project following TOP
 
