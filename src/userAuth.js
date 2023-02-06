@@ -29,7 +29,6 @@ export function setupSignins() {
         signupForm.style.display = "none";
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
         displayWarning(errorMessage);
@@ -49,12 +48,10 @@ export function setupSignins() {
     const password = loginForm.password.value;
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(() => {
         loginForm.style.display = "none";
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
         displayWarning(errorMessage);

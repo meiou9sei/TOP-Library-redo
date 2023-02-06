@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { auth } from "./userAuth";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const libraryWrapper = document.querySelector(".library-wrapper");
 const logoutButton = document.querySelector(".logout-button");
@@ -35,43 +35,49 @@ export function userLoggedoutApp() {
 }
 
 export default function setupLibraryApp() {
+  // init services
+  const db = getFirestore(app);
+  let colRef = null;
+  let currUser = null;
+  let unsub = null;
+
+  onAuthStateChanged(auth, (user) => {
+    currUser = user;
+    if (user) {
+      // define current user's collection ref
+      colRef = collection(db, `${user.uid}-library`);
+
+      // real time collection data
+      unsub = onSnapshot(colRef, (snapshot) => {
+        let myFireLibrary = [];
+        snapshot.docs.forEach((doc) => {
+          myFireLibrary.push({ ...doc.data(), id: doc.id });
+        });
+
+        // clear library
+        booksDisplay.innerHTML = "";
+        // add books back
+        myFireLibrary.forEach((book) => {
+          let newBook = new Book(
+            book.title,
+            book.author,
+            book.pages,
+            book.readStatus,
+            book.id
+          );
+          addBookToLibrary(newBook);
+        });
+      });
+    }
+  });
+
   // set up logout
   logoutButton.addEventListener("click", () => {
     signOut(auth);
+    unsub();
   });
-
-  // init services
-  const db = getFirestore(app);
-
-  // collection ref
-  const colRef = collection(db, "library");
-
-  // real time collection data
-  onSnapshot(colRef, (snapshot) => {
-    let myFireLibrary = [];
-    snapshot.docs.forEach((doc) => {
-      myFireLibrary.push({ ...doc.data(), id: doc.id });
-    });
-
-    // clear library
-    booksDisplay.innerHTML = "";
-    // add books back
-    myFireLibrary.forEach((book) => {
-      let newBook = new Book(
-        book.title,
-        book.author,
-        book.pages,
-        book.readStatus,
-        book.id
-      );
-      addBookToLibrary(newBook);
-    });
-  });
-
-  // webapp logic
 
   // declarations
-  let myLibrary = [];
   const booksDisplay = document.getElementById("booksDisplay");
   const addBookForm = document.getElementById("addBookForm");
   addBookForm.addEventListener("submit", submitNewBook);
@@ -98,7 +104,7 @@ export default function setupLibraryApp() {
       title: addBookForm.bookTitle.value,
       author: addBookForm.bookAuthor.value,
       pages: addBookForm.bookPages.value,
-      readStatus: addBookForm.isBookRead.value,
+      readStatus: addBookForm.isBookRead.value === "true",
     }).then(() => {
       console.log("adding book successful");
       addBookForm.reset();
@@ -106,7 +112,6 @@ export default function setupLibraryApp() {
   }
 
   function addBookToLibrary(newBook) {
-    myLibrary.push(newBook);
     addBookToDisplay(newBook);
   }
 
@@ -137,7 +142,7 @@ export default function setupLibraryApp() {
     discardBook.textContent = "remove book";
     bookCard.dataset.id = newBook.id;
     discardBook.addEventListener("click", function () {
-      const docRef = doc(db, "library", bookCard.dataset.id);
+      const docRef = doc(db, `${currUser.uid}-library`, bookCard.dataset.id);
       deleteDoc(docRef);
     });
     bookCard.appendChild(discardBook);
@@ -146,7 +151,11 @@ export default function setupLibraryApp() {
     const toggleRead = document.createElement("button");
     toggleRead.textContent = "toggle read";
     toggleRead.addEventListener("click", async function () {
-      const bookToUpdate = doc(db, "library", bookCard.dataset.id);
+      const bookToUpdate = doc(
+        db,
+        `${currUser.uid}-library`,
+        bookCard.dataset.id
+      );
       const docSnap = await getDoc(bookToUpdate);
 
       if (docSnap.exists()) {
@@ -158,6 +167,7 @@ export default function setupLibraryApp() {
     bookCard.appendChild(toggleRead);
 
     // sets bookCard bg color class
+    console.log(newBook, newBook.read);
     if (newBook.read) bookCard.classList.add("bookCardRead");
     else bookCard.classList.add("bookCardNotRead");
 
