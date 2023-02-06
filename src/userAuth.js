@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { displayWarning } from "./utils";
 
 export function setupSignins() {
   const signupForm = document.querySelector("#signup");
@@ -31,6 +32,7 @@ export function setupSignins() {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
+        displayWarning(errorMessage);
       });
   });
 
@@ -55,6 +57,7 @@ export function setupSignins() {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
+        displayWarning(errorMessage);
       });
   });
 
